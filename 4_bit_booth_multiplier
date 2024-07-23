@@ -1,0 +1,48 @@
+//4 bit booth multiplier
+//verilog module code:
+module boothmul(input signed[3:0] multiplicand,input signed[3:0] multiplier,output reg signed[7:0] product);
+reg signed [8:0] A;
+reg signed [4:0] Q;
+reg signed [4:0] M;
+integer count;
+always@(*)
+begin
+A=9'b0;
+Q={multiplier,1'b0};
+M={multiplicand[3],multiplicand};
+count=4;
+while(count>0)
+begin
+case({Q[1:0]})
+2'b01:A=A+{M,4'b0};
+2'b10:A=A-{M.4'b0};
+endcase
+{A,Q}={A[8],A,Q[4:1]};
+count=count-1;
+end
+product=Q[7:0];
+end
+endmodule
+
+
+//verilog testbech code:
+module boothmul_tb;
+//inputs
+reg[3:0] multiplicand;
+reg[3:0] multiplier;
+//outputs
+wire[7:0 product;
+boothmul uut(.multiplicand(multiplicand),.multiplier(multiplier),.product(product));
+initial begin
+//initialize inputs
+//case1
+multiplicand=7;multiplier=3;
+#100
+//case2
+multiplicand=-7;multiplier=3;
+#100
+//case3
+multiplicand=-7;multiplier=-3;
+end 
+endmodule
+
