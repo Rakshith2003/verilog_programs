@@ -1,0 +1,11 @@
+//positive edge triggered d flipflop with asychronous active low reset
+
+module d_ff_poedge_hi_rst(rst,clk,q,d);
+input cl,rst,d;
+output reg q;
+always @(posedge clk or negedge rst)
+  if(!rst)
+    q<=1'b0;
+else 
+    q<=d;
+endmodule
