@@ -1,0 +1,20 @@
+//4 bit comarator using dataflow style
+
+module comp_4bit(eq,gr,sm,a,b);
+input [3:0]a,b;
+output eq,gr,sm;
+assign eq=(a==b);
+assign gr=(a>b);
+assign sm=(a<b);
+endmodule
+
+
+//4 bit comparator using dataflow style
+
+module comp_4bit(eq,gr,sm,a,b);
+input [3:0]a,b;
+output eq,gr,sm;
+assign eq=&(a~^b);
+assign gr=(a[3]&~b[3])|((a[3]~^b[3])&(a[2]&~b[2]))|((a[3]~^b[3])&(a[2]~^b[2])&(a[1]&~b[1]))|((a[3]~^b[3])&(a[2]~^b[2])&(a[1]~^b[1])&((a[1]&~b[1]));
+assign sm=~(gr|eq);
+endmodule
