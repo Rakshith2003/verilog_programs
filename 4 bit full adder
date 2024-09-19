@@ -1,0 +1,22 @@
+//4 bit full adder dataflow
+
+module fa_4bit_ds(s,cy,a,b,cin);
+input [3:0]a;
+input [3:0]b;
+input cin;
+output [3:0]s;
+output cy;
+assign {cy,s}=a+b+cin;
+endmodule
+
+
+//4 bit full adder behavioral
+module fa_4bit_bs(s,cy,a,b,cin);
+input [3:0]a;
+input [3:0]b;
+input cin;
+output reg [3:0]s;
+output reg cy;
+always@(*)
+ {cy,s}=a+b+cin;
+endmodule
