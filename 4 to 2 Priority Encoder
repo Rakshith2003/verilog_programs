@@ -1,0 +1,28 @@
+//4 to 2 priority encoder using if condition and using behavioral style
+
+module enc_4_2_pri(i,y,v);
+input [3:0]i;
+output [1:0]y;
+output v;
+always @(*)
+ if(i[0])
+    {v,y}=3'b100;
+else if(i[1])
+   {v,y}=3'b101;
+else if(i[2])
+   {v,y}=3'b110;
+else if(i[3])
+   {v,y}=3'b111;
+else
+   default:3'b000;
+endmodule
+
+
+//4 to 2 priority encoder using conditional operator and using dataflow style
+
+module enc_4_2_pri(i,y,v);
+input [3:0]i;
+output [1:0]y;
+output v;
+assign {v,y}=i[0]?3'b100:i[1]?3'b101:i[2]?3'b110:i[3]?3'b111:3'b000;
+endmodule
