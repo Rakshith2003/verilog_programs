@@ -1,0 +1,11 @@
+//d latch with asycynchronus reset
+
+module d_latch_bs(q,en,rst,q);
+input d,en,rst;
+output reg q;
+alwasys @(en,q,rst)
+   if(rst)
+      q=1'b0;
+   else if(en)
+      q=d;
+endmdule
