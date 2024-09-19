@@ -1,0 +1,8 @@
+//3 to 8 decoder dataflow style
+
+module dec_3_8_ds(y,e,i);
+input [2:0]i;
+input e;
+ouput [7:0];
+assign y={e&i[2]&i[1]&i[0],e&i[2]&i[1]&~i[0],e&i[2]&~i[1]&i[0],e&i[2]&~i[1]&~i[0],e&~i[2]&i[1]&i[0],e&~i[2]&i[1]&~i[0],e&~i[2]&~i[1]&i[0],e&~i[2]&~i[1]&~i[0]};
+endmodule
