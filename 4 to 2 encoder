@@ -1,0 +1,26 @@
+//4 to 2 encoder dataflow style
+
+module enc_4_2_ds(y,v,i);
+input [3:0]i;
+output [1:0]y;
+output v;
+assign y={i[3]|i[2],i[3]|i[1]};
+assign v=|i;
+endmodule
+
+//4 to 2 encoder behavioural style
+
+module enc_4_2_bs(y,v,i);
+input [3:0]i;
+output v;
+output [1:0]y;
+always @(*)
+  case(i)
+   4'd1:{v,y}=3'b100;
+   4'd2:{v,y}=3'b101;
+   4'd4:{v,y}=3'b110;
+   4'd8:{v,y}=3'b111;
+   4'd0,4'd3,4'd5,4'd6,4'd7,4'd9,4'd10,4'd11,4'd12,4'd13,4'd14,4'd15:y=3'b000;
+   default:$display("error");
+endcase
+endmodule
