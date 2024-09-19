@@ -1,0 +1,13 @@
+//barrel shifter  structural style
+
+module barr_shift(n,lr,in,out);
+input [7:0]in;
+input [2:0]n;
+input lr;
+output [7:0]out;
+always @(*)
+ if(lr)
+   out=in<<n;
+else
+  out =in>>n;
+endmodule
