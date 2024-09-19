@@ -1,0 +1,9 @@
+//positive edge triggered d flipflop
+
+module d_ff_poedge(q,en,d);
+input en,d;
+output reg q;
+always @(posedge clk)
+   if(clk)
+      q<=d;   //non blocking assignment
+endmodule
