@@ -1,0 +1,52 @@
+//full adder using dataaflow style
+
+module ha_df(s,cy,a,b);
+input a,b;
+output s,cy;
+assign s=a^b;
+assign cy=a&b;
+endmodule
+
+//full adder using structural  style
+
+module fa_st(s,cy,a,b,cin);
+input a,b,cin;
+output s,cy;
+wire w1,w2,w3;
+ha_df g1(w1,w3,a,b);
+ha_df g2(s,w2,n1,cin);
+or g3(cy,n2,n3);
+endmodule
+
+//full adder using behavioural style
+
+module fa_bs(s,cy,a,b,cin);
+input a,b,cin;
+output reg cy,s;
+always @(*)
+  begin
+     s=a^b^cin;
+     cy=a&b|b&cin|a&cin;
+   end
+endmodule
+
+
+//Testbench
+
+'timescale 1ns/10ns
+module fa_tb;
+ reg a,b,cin;
+  wire s,cy;
+ fa_st DUT(.s(s),.cy(cy),.a(a),.b(b),.cin(cin));
+ intial 
+begin
+$monitor("time=%d,a=%b,b=%b,c=%b,s=%b,cy=%b",$time,a,b,c,s,cy);
+a=0,b=0,cin=0;
+#10 a=1,b=0,c=1;
+#10 a=0,b=1,c=1;
+#10 a=1,b=0,c=0;
+#10 a=0,b=0,c=1;
+#10 a=1,b=1,c=1;
+#10 $stop
+end 
+endmodule
