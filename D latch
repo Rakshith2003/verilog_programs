@@ -1,0 +1,17 @@
+//d latch using dataflow
+
+module d_latch_ds(en,q,d);
+input d,en;
+output q;
+assign q=en?d:q;
+endmodule
+
+//d latch using if condition ,behavioural
+
+module d_latch_bs(q,en,q);
+input d,en;
+output reg q;
+always @(en,q)
+  if(en)
+    q=d;
+endmodule
