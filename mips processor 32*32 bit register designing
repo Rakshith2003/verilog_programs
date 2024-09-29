@@ -1,0 +1,23 @@
+//mips processor 32*32 bit register designing with reset facility:
+
+module reg_32bit(rdata1,rdata2,wdata,clk,reset,sr1,sr2,dr)
+input clk,write,reset;
+input [5:0]dr,sr1,sr2;
+input [31:0] wdata;
+output [31:0]rdata1,rdata2;
+reg [31:0] regfile[0:31];
+integer k;
+assign rdata1=regfile[sr1];
+assign rdata2=regfile[sr2];
+
+always @(posedge clk)
+beign
+ if(reset)
+    for(k=0;k<32;k=k+1)
+        regfile[dr]<=0;
+    
+ else
+    if(write)
+    regfile[dr]<=wdata;
+end
+endmodule
