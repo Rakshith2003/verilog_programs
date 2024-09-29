@@ -1,0 +1,64 @@
+//pipelining concept with simple arithmmatic execution program with 3 stage
+
+module pipeline_conce(F,A,B,C,D,clk);
+parameter N=10;
+input [N-1:0]A,B,C,D;
+input clk;
+output [N-1:0]F;
+reg [N-1:0]L12_x1,L12_x2,L23_x3,L12_D,L23_D,L34_F;
+assign F= L34_F;
+always @(posedge clk)
+ begin
+    L12_x1<= #5 A+B;                //stage 1
+	 L12_x2<=#5 C-D;
+	 L12_D<=D;                   
+	 
+	 L23_x3<= #5 L12_x1+L12_x2;      //stage 2 
+	 L23_D<= L12_D;
+	 
+	 L34_F<=L23_x3*L23_D;           //stage 3
+end
+endmodule
+
+//testbench:
+module pipeline_test;
+
+	// Inputs
+	reg [9:0] A;
+	reg [9:0] B;
+	reg [9:0] C;
+	reg [9:0] D;
+	reg clk;
+
+	// Outputs
+	wire [9:0] F;
+
+	// Instantiate the Unit Under Test (UUT)
+	pipeline_conce uut (
+		.F(F), 
+		.A(A), 
+		.B(B), 
+		.C(C), 
+		.D(D), 
+		.clk(clk)
+	);
+	initial clk=0;
+	always #10 clk=~clk;
+	
+	initial
+	  begin
+		#5 A=10;B=12;C=6;D=3;
+		#20 A=15;B=8;C=2;D=7;
+		#20 A=2;B=15;C=7;D=8;
+		#20 A=5;B=9;C=16;D=6;
+	  end
+	  
+	  initial begin
+	    $dumpfile("pipelining.vcd");
+		 $dumpvars(0,pipeline_test);
+		 $monitor("time=%d,F=%d",$time,F);
+		 #200 $stop;
+
+	end
+      
+endmodule
